@@ -8,8 +8,8 @@ public class RomanParserTest {
     @Test
     public void testRomanToInt() {
         var romanParser = new RomanParser();
-        int parseNumber = romanParser.romanToInt("LVIII");
 
-        Assert.assertEquals(58, parseNumber);
+        Assert.assertEquals(58, romanParser.romanToInt("LVIII"));
+        Assert.assertNotEquals(2, romanParser.romanToInt("III"));
     }
 }
