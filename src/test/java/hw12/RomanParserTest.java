@@ -7,7 +7,7 @@ import org.junit.Test;
 public class RomanParserTest {
     @Test
     public void testRomanToInt() {
-        RomanParser romanParser = new RomanParser();
+        var romanParser = new RomanParser();
         int parseNumber = romanParser.romanToInt("LVIII");
 
         Assert.assertEquals(58, parseNumber);
