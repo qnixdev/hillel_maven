@@ -58,8 +58,4 @@ public class RomanParser {
 
         return arr;
     }
-
-    public String sey() {
-        return "test";
-    }
 }
