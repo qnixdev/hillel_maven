@@ -39,6 +39,10 @@
                 <directory>src/main/resources/hw15/</directory>
                 <filtering>true</filtering>
             </resource>
+            <resource>
+                <directory>src/main/resources/hw16/</directory>
+                <filtering>true</filtering>
+            </resource>
         </resources>
     </build>
 </project>
