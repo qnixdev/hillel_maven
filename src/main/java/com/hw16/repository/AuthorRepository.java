@@ -52,4 +52,18 @@ public class AuthorRepository {
 
         return List.of();
     }
+
+    public void remove(Author author) {
+        List<Author> newList = this.findAll()
+            .stream()
+            .filter(a -> !a.equals(author))
+            .toList()
+        ;
+
+        try {
+            this.mapper.writeValue(this.repository, newList);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

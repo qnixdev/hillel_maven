@@ -1,6 +1,7 @@
 package com.hw16;
 
 import com.hw16.description.CLI;
+import com.hw16.description.Request;
 import com.hw16.model.Author;
 import com.hw16.model.Book;
 import com.hw16.repository.AuthorRepository;
@@ -19,7 +20,7 @@ public class Library {
     }
 
     public void run() {
-        System.out.println("Welcome in book library!");
+        System.out.println(Request.WELCOME.title);
 
         String command;
         var systemScanner = new Scanner(System.in);
@@ -27,7 +28,7 @@ public class Library {
         do {
             command = systemScanner.nextLine().toLowerCase();
             this.commands
-                .getOrDefault(command, scanner -> System.out.println("Command not found!\n"))
+                .getOrDefault(command, scanner -> System.out.println(Request.NOT_FOUND.title))
                 .accept(systemScanner)
             ;
         } while (!command.equals("exit"));
@@ -46,7 +47,7 @@ public class Library {
 
                 if (Objects.equals(showBook, "y") || Objects.equals(showBook, "yes")) {
                     System.out.println(existBook.get());
-                    System.out.println("Enter next command:");
+                    System.out.println(Request.NEXT.title);
                 } else {
                     System.out.println("Enter book title:");
                 }
@@ -74,7 +75,7 @@ public class Library {
             }
 
             this.bookRepository.save(new Book(bookTitle, author));
-            System.out.println("New book successfully save!");
+            System.out.println(Request.SAVE.title);
         });
         this.commands.put(CLI.READ.command, scanner -> {
             System.out.println("Enter book title:");
@@ -90,7 +91,7 @@ public class Library {
             }
 
             System.out.println(existBook.get());
-            System.out.println("Enter next command:");
+            System.out.println(Request.NEXT.title);
         });
         this.commands.put(CLI.SHOW.command, scanner -> {
             System.out.println("Enter author name:");
@@ -107,10 +108,10 @@ public class Library {
 
             List<Book> books = this.bookRepository.findByAuthor(existAuthor.get());
             System.out.println(books);
-            System.out.println("Enter next command:");
+            System.out.println(Request.NEXT.title);
         });
         this.commands.put(CLI.EXIT.command, scanner -> {
-            System.out.println("Bye!");
+            System.out.println(Request.BYE.title);
         });
         this.commands.put(CLI.HELP.command, scanner -> {
             Arrays.stream(CLI.values()).forEach(System.out::println);

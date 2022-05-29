@@ -68,4 +68,18 @@ public class BookRepository {
 
         return List.of();
     }
+
+    public void remove(Book book) {
+        List<Book> newList = this.findAll()
+            .stream()
+            .filter(b -> !b.equals(book))
+            .toList()
+        ;
+
+        try {
+            this.mapper.writeValue(this.repository, newList);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
