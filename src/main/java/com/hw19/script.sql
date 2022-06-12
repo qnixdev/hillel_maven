@@ -28,8 +28,9 @@ INSERT INTO "user" VALUES (1, 'John', 'Smith', '2022-06-12 14:00:00');
 INSERT INTO "user" VALUES (2, 'Capitan', 'America', '2022-06-12 14:30:00');
 INSERT INTO wallet VALUES (1, 1, 'UAH', 100, '2022-06-12 14:35:00');
 INSERT INTO wallet VALUES (2, 1, 'UAH', 112, '2022-06-12 14:40:00');
-INSERT INTO wallet VALUES (3, 2, 'UAH', 99, '2022-06-12 14:40:30');
-INSERT INTO wallet VALUES (4, 3, 'UAH', 1000, '2022-06-12 14:45:59');
+INSERT INTO wallet VALUES (3, 1, 'UAH', 99, '2022-06-12 14:40:30');
+INSERT INTO wallet VALUES (4, 2, 'UAH', 1000, '2022-06-12 14:45:59');
+INSERT INTO wallet VALUES (4, 2, 'UAH', 100500, '2022-06-12 14:46:00');
 
 
 SELECT u.name AS first_name, w.currency AS currency, SUM(w.amount) AS amount
