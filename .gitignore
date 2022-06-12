@@ -3,3 +3,6 @@
 ###< IndelliJ/IDEA ###
 
 /target
+
+/docker/.env
+/docker/data

@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+    # Postgres service
+    database-service:
+        container_name: hillel-postgres
+        image: postgres:${POSTGRES_VERSION}
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            POSTGRES_DB: ${POSTGRES_DB}
+        user: ${UID}:${GID}
+        volumes:
+            - ./docker/data/postgres:/var/lib/postgresql/data
+        ports:
+            - '49159:5432'
+        networks:
+            - hillel_net
+
+# Docker networks
+networks:
+    hillel_net:
+        driver: bridge
