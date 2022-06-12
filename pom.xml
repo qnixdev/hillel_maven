@@ -43,6 +43,10 @@
                 <directory>src/main/resources/hw16/</directory>
                 <filtering>true</filtering>
             </resource>
+            <resource>
+                <directory>src/main/resources/hw20/</directory>
+                <filtering>true</filtering>
+            </resource>
         </resources>
     </build>
 </project>
