@@ -1,19 +1,19 @@
 package com.hw20;
 
+import com.hw20.dao.AuthorDAO;
+import com.hw20.dao.BookDAO;
 import com.hw20.description.CLI;
 import com.hw20.description.Request;
 import com.hw20.model.Author;
 import com.hw20.model.Book;
-import com.hw20.repository.AuthorRepository;
-import com.hw20.repository.BookRepository;
 
 import java.util.*;
 import java.util.function.Consumer;
 
 public class Library {
     private final Map<String, Consumer<Scanner>> commands = new HashMap<>();
-    private final AuthorRepository authorRepository = new AuthorRepository();
-    private final BookRepository bookRepository = new BookRepository();
+    private final AuthorDAO authorDAO = new AuthorDAO();
+    private final BookDAO bookDAO = new BookDAO();
 
     {
         this.init();
@@ -38,7 +38,7 @@ public class Library {
         this.commands.put(CLI.ADD.command, scanner -> {
             System.out.println("Enter book title:");
             String bookTitle = scanner.nextLine();
-            Optional<Book> existBook = this.bookRepository.findOneByTitle(bookTitle);
+            Optional<Book> existBook = Optional.ofNullable(this.bookDAO.findOneBy("title", bookTitle));
 
             while (existBook.isPresent()) {
                 System.out.println("The book with title '" + existBook.get().getTitle() + "' already exist!");
@@ -53,11 +53,11 @@ public class Library {
                 }
 
                 bookTitle = scanner.nextLine();
-                existBook = this.bookRepository.findOneByTitle(bookTitle);
+                existBook = Optional.ofNullable(this.bookDAO.findOneBy("title", bookTitle));
             }
 
             System.out.println("Enter author name:");
-            Optional<Author> existAuthor = this.authorRepository.findOneByName(scanner.nextLine());
+            Optional<Author> existAuthor = Optional.ofNullable(this.authorDAO.findOneBy("last_name", scanner.nextLine()));
             Author author;
 
             if (existAuthor.isEmpty()) {
@@ -68,26 +68,26 @@ public class Library {
                 System.out.println("Enter last name:");
                 String lastName = scanner.nextLine();
 
-                author = new Author(firstName, lastName);
-                this.authorRepository.save(author);
+                author = Author.builder().firstName(firstName).lastName(lastName).build();
+                this.authorDAO.save(author);
             } else {
                 author = existAuthor.get();
             }
 
-            this.bookRepository.save(new Book(bookTitle, author));
+            this.bookDAO.save(Book.builder().author(author).title(bookTitle).build());
             System.out.println(Request.SAVE.title);
         });
         this.commands.put(CLI.READ.command, scanner -> {
             System.out.println("Enter book title:");
             String bookTitle = scanner.nextLine();
-            Optional<Book> existBook = this.bookRepository.findOneByTitle(bookTitle);
+            Optional<Book> existBook = Optional.ofNullable(this.bookDAO.findOneBy("title", bookTitle));
 
             while (existBook.isEmpty()) {
                 System.out.println("Book by title '" + bookTitle + "' not found!");
                 System.out.println("Enter book title:");
 
                 bookTitle = scanner.nextLine();
-                existBook = this.bookRepository.findOneByTitle(bookTitle);
+                existBook = Optional.ofNullable(this.bookDAO.findOneBy("title", bookTitle));
             }
 
             System.out.println(existBook.get());
@@ -96,17 +96,17 @@ public class Library {
         this.commands.put(CLI.SHOW.command, scanner -> {
             System.out.println("Enter author name:");
             String authorName = scanner.nextLine();
-            Optional<Author> existAuthor = this.authorRepository.findOneByName(authorName);
+            Optional<Author> existAuthor = Optional.ofNullable(this.authorDAO.findOneBy("last_name", authorName));
 
             while (existAuthor.isEmpty()) {
                 System.out.println("The author with last name '" + authorName + "' not found!");
                 System.out.println("Enter author name:");
 
                 authorName = scanner.nextLine();
-                existAuthor = this.authorRepository.findOneByName(authorName);
+                existAuthor = Optional.ofNullable(this.authorDAO.findOneBy("last_name", authorName));
             }
 
-            List<Book> books = this.bookRepository.findByAuthor(existAuthor.get());
+            List<Book> books = this.bookDAO.findByAuthor(existAuthor.get());
             System.out.println(books);
             System.out.println(Request.NEXT.title);
         });
