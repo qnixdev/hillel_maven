@@ -31,6 +31,11 @@
             <artifactId>jackson-dataformat-xml</artifactId>
             <version>2.13.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.4.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -41,6 +46,10 @@
             </resource>
             <resource>
                 <directory>src/main/resources/hw16/</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources/hw20/</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
